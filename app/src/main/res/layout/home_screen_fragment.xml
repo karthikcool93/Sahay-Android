@@ -45,6 +45,7 @@
         <Button
             android:id="@+id/new_order"
             android:layout_width="wrap_content"
+            android:onClick="newOrder"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_15sdp"
             android:text="@string/new_order" />

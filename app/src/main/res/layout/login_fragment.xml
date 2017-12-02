@@ -5,36 +5,43 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="@dimen/_20sdp"
+    android:padding="@dimen/_8sdp"
     tools:context="com.aark.apps.sahay.LoginFragment">
 
-    <TextView
-        style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/username"
-        android:textStyle="bold" />
 
-    <EditText
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/username"
+            android:maxLines="1" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:hint="Enter username here" />
+        android:layout_marginTop="@dimen/_8sdp">
 
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:maxLines="1" />
+    </android.support.design.widget.TextInputLayout>
 
-    <TextView
-        style="@style/TextAppearance.AppCompat.Medium"
+    <Button
+        android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:text="@string/password"
-        android:textStyle="bold" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:hint="Enter password here" />
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="@string/login" />
 
 
 </LinearLayout>

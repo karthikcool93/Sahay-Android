@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.aark.apps.sahay.screens.new_order.NewOrderFragment;
 import com.aark.apps.sahay.utilities.SharedPreference;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         sp = new SharedPreference(this);
 
         Fragment fragment;
-        if (sp.getAPI_KEY() == null) {
+        if (sp.getKeyValue(SharedPreference.API_KEY) == null) {
             fragment = new LoginFragment();
         } else {
             fragment = new HomeScreenFragment();
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void newFarmer(View view){
+    public void newFarmer(View view) {
         Fragment newFarmer1 = new NewFarmerFragment();
         getSupportFragmentManager()
                 .beginTransaction()
@@ -68,12 +68,41 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    public void allFarmers(View view){
+    public void allFarmers(View view) {
         Fragment allFarmers1 = new FarmerContactsFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment, allFarmers1)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public void newOrder(View view) {
+        Fragment newOrder = new NewOrderFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment, newOrder)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void userLoggedIn() {
+        getSupportFragmentManager().popBackStack();
+
+        Fragment fragment = new HomeScreenFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() == 1)
+            finish();
+        else
+            super.onBackPressed();
+
     }
 }

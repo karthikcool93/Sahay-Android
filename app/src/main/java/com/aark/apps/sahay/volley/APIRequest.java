@@ -4,17 +4,25 @@ package com.aark.apps.sahay.volley;
  */
 
 import android.content.Context;
+import android.util.Log;
 
 import com.aark.apps.sahay.dao.ResponseCallback;
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 public class APIRequest {
@@ -31,6 +39,36 @@ public class APIRequest {
         params.put(HttpHeader.ACCEPT, "application/json; version=2.0");
         return params;
     }*/
+
+    protected void callAPI(int method, String url, final Map<String,String> requestParams, final ResponseCallback responseCallback){
+
+        StringRequest stringRequest = new StringRequest(method, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                responseCallback.callback(response,true);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse response = error.networkResponse;
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                if (requestParams != null) {
+                    return requestParams;
+                }
+                return super.getParams();
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueueSingelton.getInstance(context.getApplicationContext()).addToRequestQueue(stringRequest);
+    }
 
     protected void callApiGet(String url, final ResponseCallback responseCallback) {
 
@@ -74,6 +112,29 @@ public class APIRequest {
         };
 
         RequestQueueSingelton.getInstance(context.getApplicationContext()).addToRequestQueue(jsonArrayRequest);
+    }
+
+    public void callApiPost_Patch(String url, JSONObject jsonObject, int method, final ResponseCallback callback) {
+        final int[] statusCode = {-1};
+        JsonObjectRequest postReq = new JsonObjectRequest(method, url, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+//                callback.response(response);
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+//                callback.errorResponse(error);
+            }
+        });
+        postReq.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueueSingelton.getInstance(context.getApplicationContext()).addToRequestQueue(postReq);
     }
 
 }

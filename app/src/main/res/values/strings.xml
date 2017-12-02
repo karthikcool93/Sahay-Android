@@ -13,5 +13,14 @@
     <string name="aadhar_number">Aadhar Number</string>
     <string name="reset">Reset</string>
     <string name="save">Save</string>
+    <string name="login">Login</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="select_farmer">Select Farmer</string>
+    <string name="select_item">Select Item</string>
+    <string name="quantity">Quantity</string>
+    <string name="qty">Qty</string>
+    <string name="advance_money">Advance Money</string>
+    <string name="add_quantity">Add quantity</string>
 
 </resources>

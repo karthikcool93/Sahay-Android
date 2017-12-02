@@ -33,5 +33,6 @@ dependencies {
     compile 'com.intuit.ssp:ssp-android:1.0.4'
     compile 'com.intuit.sdp:sdp-android:1.0.4'
     compile 'com.android.volley:volley:1.0.0'
+    compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     testCompile 'junit:junit:4.12'
 }
