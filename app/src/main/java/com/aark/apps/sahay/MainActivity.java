@@ -1,15 +1,17 @@
 package com.aark.apps.sahay;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.aark.apps.sahay.utilities.SharedPreference;
+
 public class MainActivity extends AppCompatActivity {
+
+    SharedPreference sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +20,19 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        sp = new SharedPreference(this);
+        sp.setAPI_KEY("sdaasd");
+        Fragment fragment;
+        if (sp.getAPI_KEY() == null) {
+            fragment = new LoginFragment();
+        } else {
+            fragment = new HomeScreenFragment();
+        }
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
