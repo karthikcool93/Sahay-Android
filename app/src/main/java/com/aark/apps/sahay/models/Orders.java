@@ -7,8 +7,11 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 @Table(name = "Orders")
-public class Orders extends Model{
+public class Orders extends Model {
 
     @Column(index = true)
     int server_id;
@@ -39,5 +42,14 @@ public class Orders extends Model{
         this.item_id = item_id;
         this.qty = qty;
         this.advancePayment = advancePayment;
+    }
+
+    public Orders(JSONObject jobj) throws JSONException {
+        this.server_id = jobj.getInt("server_id");
+        this.date = jobj.getString("date");
+        this.farmer_id = jobj.getJSONObject("farmer").getInt("id");
+        this.item_id = jobj.getJSONObject("item").getInt("id");
+        this.advancePayment = (float) jobj.getDouble("advance_amount");
+        this.qty = jobj.getInt("quantity");
     }
 }

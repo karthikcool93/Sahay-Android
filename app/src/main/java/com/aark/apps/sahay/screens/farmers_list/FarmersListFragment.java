@@ -1,4 +1,4 @@
-package com.aark.apps.sahay.screens.items_list;
+package com.aark.apps.sahay.screens.farmers_list;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,11 +10,11 @@ import android.view.ViewGroup;
 
 import com.aark.apps.sahay.MainActivity;
 import com.aark.apps.sahay.R;
-import com.aark.apps.sahay.models.Items;
+import com.aark.apps.sahay.models.Farmers;
 
 import java.util.List;
 
-public class ItemsListFragment extends Fragment {
+public class FarmersListFragment extends Fragment {
 
     protected RecyclerView recyclerView;
 
@@ -38,22 +38,22 @@ public class ItemsListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
-        final List<Items> itemsList = Items.getAllItems();
+        final List<Farmers> farmersList = Farmers.getAllFarmers();
 
-        ItemsListAdapter itemsListAdapter;
+        FarmersNamesListAdapter farmersNamesListAdapter;
 
         if (clickHandler) {
-            itemsListAdapter = new ItemsListAdapter(itemsList, new ItemsListAdapter.Callback() {
+            farmersNamesListAdapter = new FarmersNamesListAdapter(farmersList, new FarmersNamesListAdapter.Callback() {
                 @Override
                 public void click(int pos) {
-                ((MainActivity) getActivity()).itemSelectedNewOrder(itemsList.get(pos));
+                    ((MainActivity) getActivity()).farmerSelectedNewOrder(farmersList.get(pos));
                 }
             });
         } else {
-            itemsListAdapter = new ItemsListAdapter(itemsList);
+            farmersNamesListAdapter = new FarmersNamesListAdapter(farmersList);
         }
 
-        recyclerView.setAdapter(itemsListAdapter);
+        recyclerView.setAdapter(farmersNamesListAdapter);
 
     }
 

@@ -29,5 +29,8 @@
     <string name="female">Female</string>
     <string name="male">Male</string>
     <string name="village_not_empty">Village cannot be empty</string>
+    <string name="farmer_not_empty">Farmer cannot be empty</string>
+    <string name="items_not_empty">Item cannot be empty</string>
+    <string name="money_not_empty">Money cannot be empty</string>
 
 </resources>

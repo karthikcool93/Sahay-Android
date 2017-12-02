@@ -11,6 +11,8 @@ public class Constants {
     public static final int API_FETCH_ORDERS = 4;
     public static final int API_FETCH_VILLAGES = 5;
     public static final int API_NEW_FARMER = 6;
+    public static final int API_NEW_ORDER = 7;
 
     public static final String FRAGMENT_NEW_FRAMER = "new_framer";
+    public static final String FRAGMENT_NEW_ORDER = "new_order";
 }

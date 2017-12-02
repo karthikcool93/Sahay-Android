@@ -5,11 +5,13 @@ package com.aark.apps.sahay.models;
 
 public class ItemQty {
     String item;
+    int itemId;
     int qty;
 
-    public ItemQty(String item, int qty) {
+    public ItemQty(String item, int qty, int itemId) {
         this.item = item;
         this.qty = qty;
+        this.itemId = itemId;
     }
 
     public String getItem() {
@@ -22,5 +24,9 @@ public class ItemQty {
 
     public void setQty(int qty) {
         this.qty = qty;
+    }
+
+    public int getItemId() {
+        return itemId;
     }
 }

@@ -20,19 +20,32 @@
             android:layout_height="wrap_content"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/button3"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:drawableEnd="@drawable/ic_chevron_right_black_24dp_wrapper"
-            android:text="@string/select_farmer"
-            android:textAllCaps="false" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/select_farmer"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_chevron_right_black_24dp_wrapper"
+                android:onClick="farmerSelectClickNewOrderFragment"
+                android:text="@string/select_farmer"
+                android:textAllCaps="false" />
+
+            <TextView
+                android:id="@+id/select_farmer_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/_8sdp" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
             android:text="Item details:"
             android:textStyle="bold" />
 
@@ -41,12 +54,13 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/select_item"
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.6"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp_wrapper"
+                android:onClick="itemSelectClickNewOrderFragment"
                 android:paddingEnd="@dimen/_30sdp"
                 android:text="@string/select_item"
                 android:textAllCaps="false" />
@@ -93,7 +107,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/save"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

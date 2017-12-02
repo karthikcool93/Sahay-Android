@@ -8,8 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.aark.apps.sahay.models.Farmers;
+import com.aark.apps.sahay.models.Items;
 import com.aark.apps.sahay.models.Villages;
 import com.aark.apps.sahay.screens.farmers_contact.FarmerContactsFragment;
+import com.aark.apps.sahay.screens.farmers_list.FarmersListFragment;
 import com.aark.apps.sahay.screens.items_list.ItemsListFragment;
 import com.aark.apps.sahay.screens.new_order.NewOrderFragment;
 import com.aark.apps.sahay.utilities.Constants;
@@ -97,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment newOrder = new NewOrderFragment();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment, newOrder)
+                .replace(R.id.fragment, newOrder, Constants.FRAGMENT_NEW_ORDER)
                 .addToBackStack(null)
                 .commit();
     }
@@ -139,4 +142,43 @@ public class MainActivity extends AppCompatActivity {
                 .addToBackStack(null)
                 .commit();
     }
+
+
+    public void farmerSelectClickNewOrderFragment(View view) {
+        Fragment fragment = new FarmersListFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void farmerSelectedNewOrder(Farmers farmers) {
+        getSupportFragmentManager().popBackStack();
+        NewOrderFragment newOrderFragment = (NewOrderFragment) getSupportFragmentManager().findFragmentByTag(Constants.FRAGMENT_NEW_ORDER);
+        if (newOrderFragment != null) {
+            newOrderFragment.farmerSelected(farmers);
+        }
+
+    }
+
+
+    public void itemSelectClickNewOrderFragment(View view) {
+        Fragment fragment = new ItemsListFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void itemSelectedNewOrder(Items items) {
+        getSupportFragmentManager().popBackStack();
+        NewOrderFragment newOrderFragment = (NewOrderFragment) getSupportFragmentManager().findFragmentByTag(Constants.FRAGMENT_NEW_ORDER);
+        if (newOrderFragment != null) {
+            newOrderFragment.itemSelected(items);
+        }
+
+    }
+
 }
