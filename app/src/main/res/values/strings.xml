@@ -8,5 +8,10 @@
     <string name="past_order">Past Order</string>
     <string name="new_order">New Order</string>
     <string name="items">Items</string>
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="aadhar_number">Aadhar Number</string>
+    <string name="reset">Reset</string>
+    <string name="save">Save</string>
 
 </resources>

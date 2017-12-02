@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.aark.apps.sahay.utilities.SharedPreference;
 
@@ -21,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         sp = new SharedPreference(this);
-        sp.setAPI_KEY("sdaasd");
+
         Fragment fragment;
         if (sp.getAPI_KEY() == null) {
             fragment = new LoginFragment();
@@ -55,5 +57,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void newFarmer(View view){
+        Fragment newFarmer1 = new NewFarmerFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment, newFarmer1)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void allFarmers(View view){
+        Fragment allFarmers1 = new FarmerContactsFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment, allFarmers1)
+                .addToBackStack(null)
+                .commit();
     }
 }
