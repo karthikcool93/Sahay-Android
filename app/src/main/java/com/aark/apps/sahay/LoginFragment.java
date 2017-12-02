@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.aark.apps.sahay.dao.FarmersDao;
+import com.aark.apps.sahay.dao.FetchDaoDao;
+import com.aark.apps.sahay.utilities.Constants;
 import com.aark.apps.sahay.volley.RequestCallback;
 
 /**
@@ -19,6 +21,10 @@ public class LoginFragment extends Fragment implements RequestCallback {
 
     EditText userName, password;
     Button login;
+
+    int count = 0;
+
+    FetchDaoDao fetchDaoDao;
 
     public LoginFragment() {
     }
@@ -34,6 +40,9 @@ public class LoginFragment extends Fragment implements RequestCallback {
         super.onViewCreated(view, savedInstanceState);
 
         initialise(view);
+
+        fetchDaoDao = new FetchDaoDao(getActivity(), this);
+
         final FarmersDao farmersDao = new FarmersDao(getActivity(), this);
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -65,10 +74,29 @@ public class LoginFragment extends Fragment implements RequestCallback {
 
     }
 
+    void fetchDetails() {
+        fetchDaoDao.fetchFarmers();
+    }
+
+    void checkAllFetched() {
+        if (count == 1) {
+            ((MainActivity) getActivity()).userLoggedIn();
+        }
+    }
+
     @Override
     public void onObjectRequestCallback(Object object, int check, boolean status) {
-        if(status){
-            ((MainActivity)getActivity()).userLoggedIn();
+        switch (check) {
+            case Constants.API_LOGIN:
+                if (status) {
+                    fetchDetails();
+                }
+                break;
+            case Constants.API_FETCH_FARMER:
+                if (status) {
+                    count++;
+                    checkAllFetched();
+                }
         }
     }
 }

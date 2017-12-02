@@ -5,6 +5,7 @@ package com.aark.apps.sahay.dao;
 
 import android.content.Context;
 
+import com.aark.apps.sahay.models.Farmers;
 import com.aark.apps.sahay.utilities.Constants;
 import com.aark.apps.sahay.utilities.SharedPreference;
 import com.aark.apps.sahay.volley.APIRequest;
@@ -12,21 +13,50 @@ import com.aark.apps.sahay.volley.RequestCallback;
 import com.aark.apps.sahay.volley.Urls;
 import com.android.volley.Request;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class FarmersDao extends APIRequest {
+public class FetchDaoDao extends APIRequest {
 
     private RequestCallback requestCallback;
     private Context context;
 
-    public FarmersDao(Context context, RequestCallback requestCallback) {
+    public FetchDaoDao(Context context, RequestCallback requestCallback) {
         super(context);
         this.context = context;
         this.requestCallback = requestCallback;
+    }
+
+    public void fetchFarmers() {
+        callApiGet(Urls.FARMERS, new ResponseCallback() {
+            @Override
+            public void callback(Object response, boolean status) {
+                JSONObject jsonObject = (JSONObject) response;
+                try {
+                    JSONArray object = jsonObject.getJSONArray("objects");
+                    for (int i = 0; i < object.length(); ++i) {
+                        JSONObject jonj = object.getJSONObject(i);
+                        String aadhar = jonj.getString("aadhar_number");
+                        String gender = jonj.getString("gender");
+                        int server_id = jonj.getInt("server_id");
+                        String name = jonj.getString("name");
+                        String phone = jonj.getString("phone");
+                        int village_id = jonj.getJSONObject("village").getInt("id");
+
+                        Farmers farmers = new Farmers(server_id, name, phone, village_id, aadhar, gender);
+                        farmers.save();
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                requestCallback.onObjectRequestCallback(null, Constants.API_FETCH_FARMER, true);
+            }
+        });
     }
 
     public void authenticateUser(String username, String password) {
@@ -73,16 +103,5 @@ public class FarmersDao extends APIRequest {
             }
         });
 
-    }
-
-
-    public void addFarmer(JSONObject jsonObject) {
-
-        callApiPost_Patch(Urls.FARMERS, jsonObject, Request.Method.POST, new ResponseCallback() {
-            @Override
-            public void callback(Object response, boolean status) {
-                requestCallback.onObjectRequestCallback(null, Constants.API_NEW_FARMER, status);
-            }
-        });
     }
 }

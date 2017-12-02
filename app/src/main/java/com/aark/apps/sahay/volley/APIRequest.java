@@ -4,48 +4,46 @@ package com.aark.apps.sahay.volley;
  */
 
 import android.content.Context;
-import android.util.Log;
 
 import com.aark.apps.sahay.dao.ResponseCallback;
+import com.aark.apps.sahay.utilities.SharedPreference;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class APIRequest {
 
     private Context context;
+    SharedPreference pref;
 
     public APIRequest(Context context) {
         this.context = context;
+        pref = new SharedPreference(context);
     }
 
-    /*private Map<String, String> getHeader() {
+    private Map<String, String> getHeader() {
         Map<String, String> params = new HashMap<>();
-        params.put(Reque.AUTHORIZATION, "Token " + pref.getAuthToken());
-        params.put(HttpHeader.ACCEPT, "application/json; version=2.0");
+        if (pref.getKeyValue(SharedPreference.API_KEY) != null)
+            params.put("Authorization", "APIKey " + pref.getKeyValue(SharedPreference.USER_NAME) + ":" + pref.getKeyValue(SharedPreference.API_KEY));
         return params;
-    }*/
+    }
 
-    protected void callAPI(int method, String url, final Map<String,String> requestParams, final ResponseCallback responseCallback){
+    protected void callAPI(int method, String url, final Map<String, String> requestParams, final ResponseCallback responseCallback) {
 
         StringRequest stringRequest = new StringRequest(method, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                responseCallback.callback(response,true);
+                responseCallback.callback(response, true);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -84,7 +82,12 @@ public class APIRequest {
             @Override
             public void onErrorResponse(VolleyError error) {
             }
-        });
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return getHeader();
+            }
+        };
 
         RequestQueueSingelton.getInstance(context.getApplicationContext()).addToRequestQueue(jsonReq);
 

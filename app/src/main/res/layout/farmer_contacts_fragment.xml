@@ -8,8 +8,8 @@
     android:orientation="vertical"
     tools:context="com.aark.apps.sahay.LoginFragment">
 
-    <ExpandableListView
-        android:id="@+id/expandableList"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
