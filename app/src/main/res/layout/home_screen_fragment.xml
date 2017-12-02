@@ -15,16 +15,22 @@
         android:layout_alignParentStart="true">
 
         <Button
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:drawablePadding="@dimen/_8sdp"
+            android:drawableTop="@drawable/ic_contact_24dp_wrapper"
             android:onClick="allFarmers"
             android:text="@string/contacts" />
 
         <Button
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:drawablePadding="@dimen/_8sdp"
+            android:drawableTop="@drawable/ic_grain_24dp_wrapper"
             android:onClick="itemsDisplay"
             android:text="@string/items" />
 
@@ -32,30 +38,36 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/action_settings" />
+            android:text="@string/action_settings"
+            android:visibility="gone" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottomPanel"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:gravity="center"
         android:orientation="vertical">
 
         <Button
             android:id="@+id/new_order"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
-            android:onClick="newOrder"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_15sdp"
+            android:drawablePadding="@dimen/_8sdp"
+            android:drawableTop="@drawable/ic_note_add_24dp_wrapper"
+            android:onClick="newOrder"
             android:text="@string/new_order" />
 
         <Button
             android:id="@+id/past_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/past_order" />
+            android:text="@string/past_order"
+            android:visibility="gone" />
 
     </LinearLayout>
 

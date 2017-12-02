@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.aark.apps.sahay.MainActivity;
 import com.aark.apps.sahay.R;
@@ -34,6 +35,9 @@ public class FarmersListFragment extends Fragment {
         if (getArguments() != null && getArguments().containsKey("click")) {
             clickHandler = false;
         }
+
+        ((TextView) view.findViewById(R.id.title)).setText(getString(R.string.select_farmer));
+
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);

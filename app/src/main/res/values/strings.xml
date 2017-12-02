@@ -32,5 +32,9 @@
     <string name="farmer_not_empty">Farmer cannot be empty</string>
     <string name="items_not_empty">Item cannot be empty</string>
     <string name="money_not_empty">Money cannot be empty</string>
+    <string name="authenticating">Authenticating</string>
+    <string name="getting_data">Getting data</string>
+    <string name="adding_farmer">Adding farmer</string>
+    <string name="creating_order">Creating order</string>
 
 </resources>

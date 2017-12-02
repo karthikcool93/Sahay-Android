@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.aark.apps.sahay.MainActivity;
 import com.aark.apps.sahay.R;
@@ -33,7 +34,11 @@ public class ItemsListFragment extends Fragment {
         boolean clickHandler = true;
         if (getArguments() != null && getArguments().containsKey("click")) {
             clickHandler = false;
+        }else{
+            ((TextView) view.findViewById(R.id.title)).setText(getString(R.string.select_item));
         }
+
+
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
@@ -46,7 +51,7 @@ public class ItemsListFragment extends Fragment {
             itemsListAdapter = new ItemsListAdapter(itemsList, new ItemsListAdapter.Callback() {
                 @Override
                 public void click(int pos) {
-                ((MainActivity) getActivity()).itemSelectedNewOrder(itemsList.get(pos));
+                    ((MainActivity) getActivity()).itemSelectedNewOrder(itemsList.get(pos));
                 }
             });
         } else {

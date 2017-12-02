@@ -1,5 +1,6 @@
 package com.aark.apps.sahay.screens.new_order;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -50,6 +51,8 @@ public class NewOrderFragment extends Fragment implements RequestCallback {
     int selectedFarmerInt, selectedItemInt;
 
     int countAPIResponse = 0;
+
+    ProgressDialog progressDialog;
 
     public NewOrderFragment() {
     }
@@ -114,6 +117,12 @@ public class NewOrderFragment extends Fragment implements RequestCallback {
             public void onClick(View view) {
                 if (validateData()) {
                     OrdersDao ordersDao = new OrdersDao(getActivity(), NewOrderFragment.this);
+
+                    progressDialog = new ProgressDialog(getActivity());
+                    progressDialog.setMessage(getActivity().getString(R.string.authenticating));
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+
                     for (int i = 0; i < itemQtyArrayList.size(); ++i) {
                         JSONObject jsonObject = new JSONObject();
                         try {
@@ -207,6 +216,13 @@ public class NewOrderFragment extends Fragment implements RequestCallback {
 
                 countAPIResponse++;
                 if (countAPIResponse == itemQtyArrayList.size()) {
+                    try {
+                        if (progressDialog != null)
+                            progressDialog.cancel();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     getActivity().getSupportFragmentManager().popBackStack();
                 }
             } catch (JSONException e) {

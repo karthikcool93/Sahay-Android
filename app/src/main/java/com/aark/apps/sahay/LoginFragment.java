@@ -1,5 +1,6 @@
 package com.aark.apps.sahay;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,8 @@ public class LoginFragment extends Fragment implements RequestCallback {
     int count = 0;
 
     FetchDaoDao fetchDaoDao;
+
+    ProgressDialog progressDialog;
 
     public LoginFragment() {
     }
@@ -83,6 +86,12 @@ public class LoginFragment extends Fragment implements RequestCallback {
 
     void checkAllFetched() {
         if (count == 4) {
+            try {
+                if (progressDialog != null)
+                    progressDialog.cancel();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             ((MainActivity) getActivity()).userLoggedIn();
         }
     }
@@ -92,6 +101,10 @@ public class LoginFragment extends Fragment implements RequestCallback {
         switch (check) {
             case Constants.API_LOGIN:
                 if (status) {
+                    progressDialog = new ProgressDialog(getActivity());
+                    progressDialog.setMessage(getString(R.string.getting_data));
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
                     fetchDetails();
                 }
                 break;

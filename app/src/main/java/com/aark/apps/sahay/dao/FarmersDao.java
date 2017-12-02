@@ -3,8 +3,10 @@ package com.aark.apps.sahay.dao;
  * Created by karthik on 02/12/17.
  */
 
+import android.app.ProgressDialog;
 import android.content.Context;
 
+import com.aark.apps.sahay.R;
 import com.aark.apps.sahay.utilities.Constants;
 import com.aark.apps.sahay.utilities.SharedPreference;
 import com.aark.apps.sahay.volley.APIRequest;
@@ -34,6 +36,11 @@ public class FarmersDao extends APIRequest {
         Map<String, String> map = new HashMap<>();
         map.put("username", username);
         map.put("password", password);
+
+        final ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage(context.getString(R.string.authenticating));
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         callAPI(Request.Method.POST, Urls.LOGIN, map, new ResponseCallback() {
             @Override
@@ -70,6 +77,13 @@ public class FarmersDao extends APIRequest {
                     }
 
                 }
+
+                try {
+                    progressDialog.cancel();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
@@ -78,9 +92,18 @@ public class FarmersDao extends APIRequest {
 
     public void addFarmer(JSONObject jsonObject) {
 
+        final ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage(context.getString(R.string.adding_farmer));
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         callApiPost_Patch(Urls.FARMERS, jsonObject, Request.Method.POST, new ResponseCallback() {
             @Override
             public void callback(Object response, boolean status) {
+                try {
+                    progressDialog.cancel();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 requestCallback.onObjectRequestCallback(response, Constants.API_NEW_FARMER, status);
             }
         });
