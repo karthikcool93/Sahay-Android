@@ -3,11 +3,12 @@ package com.aark.apps.sahay.models;
  * Created by karthik on 02/12/17.
  */
 
+import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
 @Table(name = "Orders")
-public class Orders {
+public class Orders extends Model{
 
     @Column(index = true)
     int server_id;
@@ -25,9 +26,18 @@ public class Orders {
     int qty;
 
     @Column
-    int advancePayment;
+    float advancePayment;
 
     public Orders() {
         super();
+    }
+
+    public Orders(int server_id, String date, int farmer_id, int item_id, int qty, float advancePayment) {
+        this.server_id = server_id;
+        this.date = date;
+        this.farmer_id = farmer_id;
+        this.item_id = item_id;
+        this.qty = qty;
+        this.advancePayment = advancePayment;
     }
 }

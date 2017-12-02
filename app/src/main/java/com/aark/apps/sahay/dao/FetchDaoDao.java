@@ -6,19 +6,17 @@ package com.aark.apps.sahay.dao;
 import android.content.Context;
 
 import com.aark.apps.sahay.models.Farmers;
+import com.aark.apps.sahay.models.Items;
+import com.aark.apps.sahay.models.Orders;
+import com.aark.apps.sahay.models.Villages;
 import com.aark.apps.sahay.utilities.Constants;
-import com.aark.apps.sahay.utilities.SharedPreference;
 import com.aark.apps.sahay.volley.APIRequest;
 import com.aark.apps.sahay.volley.RequestCallback;
 import com.aark.apps.sahay.volley.Urls;
-import com.android.volley.Request;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class FetchDaoDao extends APIRequest {
 
@@ -59,49 +57,80 @@ public class FetchDaoDao extends APIRequest {
         });
     }
 
-    public void authenticateUser(String username, String password) {
-
-        Map<String, String> map = new HashMap<>();
-        map.put("username", username);
-        map.put("password", password);
-
-        callAPI(Request.Method.POST, Urls.LOGIN, map, new ResponseCallback() {
+    public void fetchOrders() {
+        callApiGet(Urls.ORDERS, new ResponseCallback() {
             @Override
             public void callback(Object response, boolean status) {
-                if (status) {
-                    try {
-                        SharedPreference sharedPreference = new SharedPreference(context);
-                        JSONObject jsonObject = new JSONObject((String) response);
-                        if (jsonObject.getString("phone_number") != null)
-                            sharedPreference.setKeyValue(SharedPreference.PHONE_NUMBER, jsonObject.getString("phone_number"));
+                JSONObject jsonObject = (JSONObject) response;
+                try {
+                    JSONArray objects = jsonObject.getJSONArray("objects");
+                    for (int i = 0; i < objects.length(); ++i) {
+                        JSONObject jobj = objects.getJSONObject(i);
+                        int server_id = jobj.getInt("server_id");
+                        String date = jobj.getString("date");
+                        int farmer_id = jobj.getJSONObject("farmer").getInt("id");
+                        int item_id = jobj.getJSONObject("item").getInt("id");
+                        float advanceAmount = (float) jobj.getDouble("advance_amount");
+                        int quantity = jobj.getInt("quantity");
 
-                        if (jsonObject.getString("user_id") != null)
-                            sharedPreference.setKeyValue(SharedPreference.USER_ID, jsonObject.getString("user_id"));
-
-                        if (jsonObject.getString("key") != null)
-                            sharedPreference.setKeyValue(SharedPreference.API_KEY, jsonObject.getString("key"));
-
-                        if (jsonObject.getString("preferred_language") != null)
-                            sharedPreference.setKeyValue(SharedPreference.PREFERRED_LANGUAGE, jsonObject.getString("preferred_language"));
-
-                        if (jsonObject.getString("helpline") != null)
-                            sharedPreference.setKeyValue(SharedPreference.HELPLINE, jsonObject.getString("helpline"));
-
-                        if (jsonObject.getString("full_name") != null)
-                            sharedPreference.setKeyValue(SharedPreference.FULL_NAME, jsonObject.getString("full_name"));
-
-                        if (jsonObject.getString("user_name") != null)
-                            sharedPreference.setKeyValue(SharedPreference.USER_NAME, jsonObject.getString("user_name"));
-
-                        requestCallback.onObjectRequestCallback(null, Constants.API_LOGIN, true);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        Orders orders = new Orders(server_id, date, farmer_id, item_id, quantity, advanceAmount);
+                        orders.save();
                     }
-
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+
+                requestCallback.onObjectRequestCallback(null, Constants.API_FETCH_ORDERS, true);
             }
         });
+    }
 
+    public void fetchItems() {
+        callApiGet(Urls.ITEMS, new ResponseCallback() {
+            @Override
+            public void callback(Object response, boolean status) {
+                JSONObject jsonObject = (JSONObject) response;
+                try {
+                    JSONArray objects = jsonObject.getJSONArray("objects");
+                    for (int i = 0; i < objects.length(); ++i) {
+                        JSONObject jobj = objects.getJSONObject(i);
+                        int server_id = jobj.getInt("id");
+                        String name = jobj.getString("item_name_en");
+                        String name_hi = jobj.getString("item_name_hi");
+
+                        Items items = new Items(server_id, name, name_hi);
+                        items.save();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                requestCallback.onObjectRequestCallback(null, Constants.API_FETCH_ITEMS, true);
+            }
+        });
+    }
+
+    public void fetchVillages() {
+        callApiGet(Urls.VILLAGES, new ResponseCallback() {
+            @Override
+            public void callback(Object response, boolean status) {
+                JSONObject jsonObject = (JSONObject) response;
+                try {
+                    JSONArray objects = jsonObject.getJSONArray("objects");
+                    for (int i = 0; i < objects.length(); ++i) {
+                        JSONObject jobj = objects.getJSONObject(i);
+                        int server_id = jobj.getInt("server_id");
+                        String name = jobj.getString("village_name");
+
+                        Villages villages = new Villages(server_id, name);
+                        villages.save();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                requestCallback.onObjectRequestCallback(null, Constants.API_FETCH_VILLAGES, true);
+            }
+        });
     }
 }

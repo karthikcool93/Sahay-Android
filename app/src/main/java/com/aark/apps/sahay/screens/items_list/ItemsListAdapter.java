@@ -1,4 +1,4 @@
-package com.aark.apps.sahay.screens.farmers_contact;
+package com.aark.apps.sahay.screens.items_list;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,7 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aark.apps.sahay.R;
-import com.aark.apps.sahay.models.Farmers;
+import com.aark.apps.sahay.models.Items;
+import com.aark.apps.sahay.models.Villages;
 
 import java.util.List;
 
@@ -16,9 +17,9 @@ import java.util.List;
  * Created by karthik on 01/07/17.
  */
 
-public class FarmersListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ItemsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Farmers> farmersArrayList;
+    private List<Items> itemsList;
 
     public interface Callback {
         void click(int pos);
@@ -26,12 +27,12 @@ public class FarmersListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     Callback callback;
 
-    public FarmersListAdapter(List<Farmers> farmersArrayList) {
-        this.farmersArrayList = farmersArrayList;
+    public ItemsListAdapter(List<Items> itemsList) {
+        this.itemsList = itemsList;
     }
 
-    public FarmersListAdapter(List<Farmers> farmersArrayList, Callback callback) {
-        this.farmersArrayList = farmersArrayList;
+    public ItemsListAdapter(List<Items> itemsList, Callback callback) {
+        this.itemsList = itemsList;
         this.callback = callback;
     }
 
@@ -39,7 +40,7 @@ public class FarmersListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
-        v = LayoutInflater.from(parent.getContext()).inflate(R.layout.farmer_list_row, parent, false);
+        v = LayoutInflater.from(parent.getContext()).inflate(R.layout.villages_list_row, parent, false);
 
         final RowVH rowVH = new RowVH(v);
         if (callback != null) {
@@ -59,28 +60,22 @@ public class FarmersListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         RowVH rowVH = (RowVH) holder;
 
-        rowVH.name.setText(farmersArrayList.get(holder.getAdapterPosition()).getName());
-        rowVH.village.setText(farmersArrayList.get(holder.getAdapterPosition()).getVillageName());
-        rowVH.phone.setText(farmersArrayList.get(holder.getAdapterPosition()).getPhone());
-        rowVH.aadhar.setText(farmersArrayList.get(holder.getAdapterPosition()).getAadharNo());
+        rowVH.name.setText(itemsList.get(holder.getAdapterPosition()).getName());
     }
 
     @Override
     public int getItemCount() {
-        return farmersArrayList.size();
+        return itemsList.size();
     }
 
     private class RowVH extends RecyclerView.ViewHolder {
 
-        TextView name, village, phone, aadhar;
+        TextView name;
         LinearLayout fullView;
 
         RowVH(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name);
-            village = itemView.findViewById(R.id.village);
-            phone = itemView.findViewById(R.id.phone);
-            aadhar = itemView.findViewById(R.id.aadhar);
             fullView = itemView.findViewById(R.id.fullView);
         }
     }

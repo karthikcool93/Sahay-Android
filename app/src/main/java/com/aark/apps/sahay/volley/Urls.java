@@ -11,4 +11,7 @@ public class Urls {
 
     public static final String LOGIN = SERVER_DOMAIN + "sahay/login/";
     public static final String FARMERS = SERVER_DOMAIN_2 + "farmer/";
+    public static final String VILLAGES = SERVER_DOMAIN_2 + "village/";
+    public static final String ITEMS = SERVER_DOMAIN_2 + "item/";
+    public static final String ORDERS = SERVER_DOMAIN_2 + "order/";
 }

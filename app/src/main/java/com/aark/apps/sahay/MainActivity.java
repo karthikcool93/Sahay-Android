@@ -8,8 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.aark.apps.sahay.models.Villages;
 import com.aark.apps.sahay.screens.farmers_contact.FarmerContactsFragment;
+import com.aark.apps.sahay.screens.items_list.ItemsListFragment;
 import com.aark.apps.sahay.screens.new_order.NewOrderFragment;
+import com.aark.apps.sahay.utilities.Constants;
 import com.aark.apps.sahay.utilities.SharedPreference;
 
 public class MainActivity extends AppCompatActivity {
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment newFarmer1 = new NewFarmerFragment();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment, newFarmer1)
+                .replace(R.id.fragment, newFarmer1, Constants.FRAGMENT_NEW_FRAMER)
                 .addToBackStack(null)
                 .commit();
     }
@@ -74,6 +77,18 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment, allFarmers1)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void itemsDisplay(View view) {
+        Fragment items = new ItemsListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("click", false);
+        items.setArguments(bundle);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment, items)
                 .addToBackStack(null)
                 .commit();
     }
@@ -105,5 +120,23 @@ public class MainActivity extends AppCompatActivity {
         else
             super.onBackPressed();
 
+    }
+
+    public void villageSelectedNewFarmer(Villages villages) {
+        getSupportFragmentManager().popBackStack();
+        NewFarmerFragment newFarmerFragment = (NewFarmerFragment) getSupportFragmentManager().findFragmentByTag(Constants.FRAGMENT_NEW_FRAMER);
+        if (newFarmerFragment != null) {
+            newFarmerFragment.villageSelected(villages);
+        }
+
+    }
+
+    public void villageSelectClickNewFragment() {
+        Fragment fragment = new VillagesListFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

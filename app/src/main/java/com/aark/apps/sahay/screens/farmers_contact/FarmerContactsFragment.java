@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.aark.apps.sahay.R;
 import com.aark.apps.sahay.models.Farmers;
+import com.aark.apps.sahay.models.Villages;
 
 import java.util.List;
 
@@ -42,6 +43,11 @@ public class FarmerContactsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
 
         List<Farmers> farmersArrayList = Farmers.getAllFarmers();
+
+        for (int i = 0; i < farmersArrayList.size(); ++i) {
+            String name = Villages.getVillageData(farmersArrayList.get(i).getVillage()).getName();
+            farmersArrayList.get(i).setVillageName(name);
+        }
         FarmersListAdapter farmersListAdapter = new FarmersListAdapter(farmersArrayList);
 
         recyclerView.setAdapter(farmersListAdapter);

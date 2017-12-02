@@ -81,7 +81,7 @@ public class FarmersDao extends APIRequest {
         callApiPost_Patch(Urls.FARMERS, jsonObject, Request.Method.POST, new ResponseCallback() {
             @Override
             public void callback(Object response, boolean status) {
-                requestCallback.onObjectRequestCallback(null, Constants.API_NEW_FARMER, status);
+                requestCallback.onObjectRequestCallback(response, Constants.API_NEW_FARMER, status);
             }
         });
     }

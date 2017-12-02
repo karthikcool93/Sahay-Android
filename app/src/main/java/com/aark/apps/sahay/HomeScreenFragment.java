@@ -27,9 +27,6 @@ public class HomeScreenFragment extends Fragment implements RequestCallback {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-//        FetchDaoDao fetchDaoDao = new FetchDaoDao(getActivity(), this);
-//        fetchDaoDao.fetchFarmers();
     }
 
     @Override

@@ -118,12 +118,12 @@ public class APIRequest {
     }
 
     public void callApiPost_Patch(String url, JSONObject jsonObject, int method, final ResponseCallback callback) {
-        final int[] statusCode = {-1};
+
         JsonObjectRequest postReq = new JsonObjectRequest(method, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
-//                callback.response(response);
+                callback.callback(response, true);
             }
 
         }, new Response.ErrorListener() {
@@ -132,7 +132,12 @@ public class APIRequest {
 
 //                callback.errorResponse(error);
             }
-        });
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return getHeader();
+            }
+        };
         postReq.setRetryPolicy(new DefaultRetryPolicy(
                 10000,
                 0,

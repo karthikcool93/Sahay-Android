@@ -76,10 +76,13 @@ public class LoginFragment extends Fragment implements RequestCallback {
 
     void fetchDetails() {
         fetchDaoDao.fetchFarmers();
+        fetchDaoDao.fetchOrders();
+        fetchDaoDao.fetchVillages();
+        fetchDaoDao.fetchItems();
     }
 
     void checkAllFetched() {
-        if (count == 1) {
+        if (count == 4) {
             ((MainActivity) getActivity()).userLoggedIn();
         }
     }
@@ -93,6 +96,9 @@ public class LoginFragment extends Fragment implements RequestCallback {
                 }
                 break;
             case Constants.API_FETCH_FARMER:
+            case Constants.API_FETCH_ITEMS:
+            case Constants.API_FETCH_VILLAGES:
+            case Constants.API_FETCH_ORDERS:
                 if (status) {
                     count++;
                     checkAllFetched();

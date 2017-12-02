@@ -8,6 +8,9 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 @Table(name = "Farmers")
@@ -23,6 +26,8 @@ public class Farmers extends Model {
 
     @Column
     int village;
+
+    String villageName;
 
     @Column
     String aadharNo;
@@ -41,6 +46,15 @@ public class Farmers extends Model {
         this.village = village;
         this.aadharNo = aadharNo;
         this.gender = gender;
+    }
+
+    public Farmers(JSONObject jonj) throws JSONException {
+        this.aadharNo = jonj.getString("aadhar_number");
+        this.gender = jonj.getString("gender");
+        this.server_id = jonj.getInt("server_id");
+        this.name = jonj.getString("name");
+        this.phone = jonj.getString("phone");
+        this.village = jonj.getJSONObject("village").getInt("id");
     }
 
     public int getServer_id() {
@@ -71,4 +85,11 @@ public class Farmers extends Model {
         return new Select().from(Farmers.class).execute();
     }
 
+    public void setVillageName(String villageName) {
+        this.villageName = villageName;
+    }
+
+    public String getVillageName() {
+        return villageName;
+    }
 }
